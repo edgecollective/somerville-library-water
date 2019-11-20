@@ -8,6 +8,11 @@ import gc
 from analogio import AnalogIn
 
 
+
+# led
+led = digitalio.DigitalInOut(board.D13)
+led.direction = digitalio.Direction.OUTPUT
+
 def get_voltage(pin):
     return (pin.value * 3.3) / 65536
 
@@ -74,6 +79,13 @@ while True:
         response = requests.post(JSON_POST_URL, json=json_data)
         print(response.content)
         response.close()
+
+        for i in range(0,5):
+            led.value=True
+            time.sleep(.5)
+            led.value=False
+            time.sleep(.5)
+
         print("Done. Sleeping ... ")
         time.sleep(90)
 
